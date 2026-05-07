@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MGM Design System Reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Inter:wght@400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --carbon-black:    #000000;
+      --carbon-90:       #111111;
+      --carbon-80:       #1b1b1b;
+      --carbon-70:       #2e2e2e;
+      --carbon-60:       #58585b;
+      --carbon-50:       #757575;
+      --carbon-40:       #919191;
+      --carbon-30:       #b9b9bb;
+      --carbon-20:       #d1d1d1;
+      --carbon-10:       #e6e6e6;
+      --carbon-05:       #f6f6f6;
+      --spacesuit-white: #ffffff;
+      --nasa-red:        #FC3D21;
+      --nasa-red-dark:   #E03012;
+      --blue-vivid:      #1C67E3;
+      --blue-bright:     #2491ff;
+      --blue-mono:       #288bff;
+      --font-primary:    'Public Sans', -apple-system, sans-serif;
+      --font-secondary:  'Inter', var(--font-primary);
+      --font-mono:       'DM Mono', 'SF Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-primary);
+      background: var(--carbon-05);
+      color: var(--carbon-black);
+      padding: 40px;
+      line-height: 1.6;
+    }
+
+    .page { max-width: 900px; margin: 0 auto; }
+
+    /* Header */
+    .ds-header {
+      background: white;
+      color: var(--carbon-70);
+      padding: 32px 40px;
+      border-radius: 4px;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .ds-header-stripe { width: 4px; height: 60px; background: var(--nasa-red); border-radius: 2px; flex-shrink: 0; }
+    .ds-header h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; }
+    .ds-header p { font-size: 13px; color: var(--carbon-40); margin-top: 4px; font-family: var(--font-mono); }
+
+    /* Section */
+    .ds-section { background: white; border-radius: 4px; padding: 32px; margin-bottom: 24px; border: 1px solid var(--carbon-10); }
+    .ds-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--carbon-40); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--carbon-10); font-family: var(--font-mono); }
+
+    /* Colors */
+    .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+    .color-chip { border-radius: 4px; overflow: hidden; border: 1px solid var(--carbon-10); }
+    .color-swatch { height: 64px; }
+    .color-info { padding: 8px 10px; background: white; }
+    .color-name { font-size: 11px; font-weight: 600; color: var(--carbon-60); }
+    .color-hex { font-size: 10px; font-family: var(--font-mono); color: var(--carbon-40); margin-top: 2px; }
+
+    /* Typography */
+    .type-row { padding: 16px 0; border-bottom: 1px solid var(--carbon-05); display: flex; align-items: baseline; gap: 24px; }
+    .type-row:last-child { border-bottom: none; }
+    .type-label { font-size: 10px; font-family: var(--font-mono); color: var(--carbon-40); width: 120px; flex-shrink: 0; line-height: 1.6; }
+    .type-sample { flex: 1; }
+
+    /* Spacing */
+    .spacing-row { display: flex; align-items: center; gap: 16px; padding: 8px 0; }
+    .spacing-bar { background: var(--nasa-red); height: 16px; border-radius: 2px; }
+    .spacing-label { font-size: 11px; font-family: var(--font-mono); color: var(--carbon-60); }
+
+    /* Logo */
+    .logo-box { background: var(--carbon-black); padding: 24px 32px; border-radius: 4px; display: inline-flex; align-items: center; }
+    .logo-box-white { background: var(--spacesuit-white); padding: 24px 32px; border-radius: 4px; display: inline-flex; align-items: center; border: 1px solid var(--carbon-10); margin-left: 16px; }
+
+    /* Buttons */
+    .comp-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+    .btn-primary { background: var(--nasa-red); color: white; padding: 8px 20px; border: none; border-radius: 2px; font-family: var(--font-primary); font-size: 14px; font-weight: 600; cursor: pointer; }
+    .btn-secondary { background: transparent; color: var(--carbon-black); padding: 8px 20px; border: 2px solid var(--carbon-black); border-radius: 2px; font-family: var(--font-primary); font-size: 14px; font-weight: 600; cursor: pointer; }
+    .btn-ghost { background: transparent; color: var(--blue-vivid); padding: 8px 20px; border: none; border-radius: 2px; font-family: var(--font-primary); font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: underline; }
+
+    .callout { border-left: 3px solid var(--nasa-red); background: var(--carbon-05); padding: 12px 16px; border-radius: 0 2px 2px 0; }
+    .callout p { font-size: 13px; color: var(--carbon-60); margin: 0; }
+
+    table.sample { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+    table.sample thead th { text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--carbon-40); padding: 6px 10px; border-bottom: 2px solid var(--carbon-10); font-family: var(--font-mono); }
+    table.sample tbody td { padding: 8px 10px; border-bottom: 1px solid var(--carbon-05); color: var(--carbon-60); }
+
+    code.inline { font-family: var(--font-mono); font-size: 12px; background: var(--carbon-05); padding: 2px 6px; border-radius: 2px; }
+    pre.block { background: var(--carbon-black); color: var(--carbon-20); font-family: var(--font-mono); font-size: 12px; line-height: 1.75; padding: 16px 20px; border-radius: 2px; margin-top: 8px; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="ds-header">
+    <div class="ds-header-stripe"></div>
+    <div>
+      <h1>MGM Design System</h1>
+    </div>
+  </div>
+
+  <!-- Colors: Brand -->
+  <div class="ds-section">
+    <div class="ds-section-title">Colors — Brand</div>
+    <div class="color-grid">
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#FC3D21;"></div>
+        <div class="color-info"><div class="color-name">nasa-red</div><div class="color-hex">#FC3D21</div></div>
+      </div>
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#E03012;"></div>
+        <div class="color-info"><div class="color-name">nasa-red-dark</div><div class="color-hex">#E03012</div></div>
+      </div>
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#1C67E3;"></div>
+        <div class="color-info"><div class="color-name">blue-vivid</div><div class="color-hex">#1C67E3</div></div>
+      </div>
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#2491ff;"></div>
+        <div class="color-info"><div class="color-name">blue-bright</div><div class="color-hex">#2491FF</div></div>
+      </div>
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#288bff;"></div>
+        <div class="color-info"><div class="color-name">blue-mono</div><div class="color-hex">#288BFF</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Colors: Neutrals -->
+  <div class="ds-section">
+    <div class="ds-section-title">Colors — Carbon Scale (Neutrals)</div>
+    <div class="color-grid">
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#000000;"></div>
+        <div class="color-info"><div class="color-name">carbon-black</div><div class="color-hex">#000000</div></div>
+      </div>
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#111111;"></div>
+        <div class="color-info"><div class="color-name">carbon-90</div><div class="color-hex">#111111</div></div>
+      </div>
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#1b1b1b;"></div>
+        <div class="color-info"><div class="color-name">carbon-80</div><div class="color-hex">#1B1B1B</div></div>
+      </div>
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#2e2e2e;"></div>
+        <div class="color-info"><div class="color-name">carbon-70</div><div class="color-hex">#2E2E2E</div></div>
+      </div>
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#58585b;"></div>
+        <div class="color-info"><div class="color-name">carbon-60</div><div class="color-hex">#58585B</div></div>
+      </div>
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#757575;"></div>
+        <div class="color-info"><div class="color-name">carbon-50</div><div class="color-hex">#757575</div></div>
+      </div>
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#919191;"></div>
+        <div class="color-info"><div class="color-name">carbon-40</div><div class="color-hex">#919191</div></div>
+      </div>
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#b9b9bb;"></div>
+        <div class="color-info"><div class="color-name">carbon-30</div><div class="color-hex">#B9B9BB</div></div>
+      </div>
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#d1d1d1;"></div>
+        <div class="color-info"><div class="color-name">carbon-20</div><div class="color-hex">#D1D1D1</div></div>
+      </div>
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#e6e6e6;"></div>
+        <div class="color-info"><div class="color-name">carbon-10</div><div class="color-hex">#E6E6E6</div></div>
+      </div>
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#f6f6f6; border:1px solid #e6e6e6;"></div>
+        <div class="color-info"><div class="color-name">carbon-05</div><div class="color-hex">#F6F6F6</div></div>
+      </div>
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#ffffff; border:1px solid #e6e6e6;"></div>
+        <div class="color-info"><div class="color-name">spacesuit-white</div><div class="color-hex">#FFFFFF</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Typography -->
+  <div class="ds-section">
+    <div class="ds-section-title">Typography — Public Sans (Primary) · DM Mono (Mono)</div>
+    <div class="type-row">
+      <div class="type-label">Display / H1<br>36pt · 800<br>letter-spacing -0.02em</div>
+      <div class="type-sample" style="font-family:'Public Sans',sans-serif; font-size:36px; font-weight:800; letter-spacing:-0.02em; line-height:1.1;">Mission Report</div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">Heading / H2<br>24pt · 700<br>letter-spacing -0.01em</div>
+      <div class="type-sample" style="font-family:'Public Sans',sans-serif; font-size:24px; font-weight:700; letter-spacing:-0.01em; line-height:1.25;">Executive Summary</div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">Subheading / H3<br>16pt · 700</div>
+      <div class="type-sample" style="font-family:'Public Sans',sans-serif; font-size:16px; font-weight:700; line-height:1.35;">Data Collection Protocol</div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">Label / H4<br>10.5pt · 700<br>UPPERCASE · 0.06em</div>
+      <div class="type-sample" style="font-family:'Public Sans',sans-serif; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:#58585b;">Mission Status</div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">Body<br>10.5pt · 400<br>line-height 1.65</div>
+      <div class="type-sample" style="font-family:'Public Sans',sans-serif; font-size:10.5px; color:#58585b; max-width:60ch; line-height:1.65;">The Europa Clipper mission will conduct detailed reconnaissance of Jupiter's moon Europa to see whether the icy moon could harbour conditions suitable for life.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">Overline / Mono<br>9pt · DM Mono<br>UPPERCASE · 0.1em</div>
+      <div class="type-sample" style="font-family:'DM Mono',monospace; font-size:9px; color:#FC3D21; text-transform:uppercase; letter-spacing:0.1em;">Technical Report · REF-2026-001</div>
+    </div>
+  </div>
+
+  <!-- Logo -->
+  <div class="ds-section">
+    <div class="ds-section-title">Logo — mgm-logo.svg</div>
+    <div style="display:flex; gap:0; align-items:center; flex-wrap:wrap;">
+      <div class="logo-box-white">
+        <img src="mgm-logo.svg" alt="MGM" height="36">
+      </div>
+    </div>
+    <p style="font-size:11px; color:var(--carbon-40); margin-top:12px; font-family:var(--font-mono);">Used in report cover, page headers, and slide footers</p>
+  </div>
+
+  <!-- Components -->
+  <div class="ds-section">
+    <div class="ds-section-title">Components — Buttons</div>
+    <div class="comp-row">
+      <button class="btn-primary">Primary Action</button>
+      <button class="btn-secondary">Secondary</button>
+      <button class="btn-ghost">Ghost / Link</button>
+    </div>
+  </div>
+
+  <div class="ds-section">
+    <div class="ds-section-title">Components — Callout (rendered from blockquote)</div>
+    <div class="callout">
+      <p><strong>Key finding:</strong> Pre-fetching PR data via Python client saves 3–5 MCP round-trips per review, reducing token usage by approximately 15–20%.</p>
+    </div>
+  </div>
+
+  <div class="ds-section">
+    <div class="ds-section-title">Components — Data Table</div>
+    <table class="sample">
+      <thead>
+        <tr><th>Metric</th><th>Before</th><th>After</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Avg review time</td><td>8 min (manual)</td><td>45 sec</td></tr>
+        <tr><td>Token usage</td><td>—</td><td>~12,000 tokens</td></tr>
+        <tr><td>MCP calls per review</td><td>—</td><td>2–6 (writes only)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ds-section">
+    <div class="ds-section-title">Components — Code</div>
+    <p style="font-size:13px; color:var(--carbon-60); margin-bottom:8px;">Inline: <code class="inline">node render.js input.md --format=report -o output.pdf</code></p>
+    <pre class="block">// Pre-fetch PR data before agent loop
+const diff = await BitbucketClient.getDiff(prId);
+const prompt = buildPrompt({ diff, metadata });
+await agent.run(prompt);</pre>
+  </div>
+
+  <!-- Spacing -->
+  <div class="ds-section">
+    <div class="ds-section-title">Spacing Scale</div>
+    <div class="spacing-row"><div class="spacing-bar" style="width:4px;"></div><div class="spacing-label">4px — xs</div></div>
+    <div class="spacing-row"><div class="spacing-bar" style="width:8px;"></div><div class="spacing-label">8px — sm</div></div>
+    <div class="spacing-row"><div class="spacing-bar" style="width:16px;"></div><div class="spacing-label">16px — md</div></div>
+    <div class="spacing-row"><div class="spacing-bar" style="width:24px;"></div><div class="spacing-label">24px — lg</div></div>
+    <div class="spacing-row"><div class="spacing-bar" style="width:32px;"></div><div class="spacing-label">32px — xl</div></div>
+    <div class="spacing-row"><div class="spacing-bar" style="width:48px;"></div><div class="spacing-label">48px — 2xl</div></div>
+    <div class="spacing-row"><div class="spacing-bar" style="width:64px;"></div><div class="spacing-label">64px — 3xl</div></div>
+  </div>
+
+</div>
+</body>
+</html>

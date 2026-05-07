@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MGM Slides Template</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ── Design tokens (from MGM design system) ─────────────── */
+    :root {
+      --carbon-black:    #000000;
+      --carbon-90:       #111111;
+      --carbon-80:       #1b1b1b;
+      --carbon-70:       #2e2e2e;
+      --carbon-60:       #58585b;
+      --carbon-50:       #757575;
+      --carbon-40:       #919191;
+      --carbon-30:       #b9b9bb;
+      --carbon-20:       #d1d1d1;
+      --carbon-10:       #e6e6e6;
+      --carbon-05:       #f6f6f6;
+      --white:           #ffffff;
+      --accent:          #FC3D21;
+      --accent-dark:     #E03012;
+      --blue-vivid:      #1C67E3;
+      --blue-bright:     #2491ff;
+      --font-primary:    'Public Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono:       'DM Mono', 'SF Mono', 'Fira Code', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Page setup ─────────────────────────────────────────── */
+    @page {
+      size: 254mm 142.9mm landscape;
+      margin: 0;
+    }
+
+    body {
+      font-family: var(--font-primary);
+      background: var(--carbon-10);
+      /* Browser preview: show slides stacked with gap */
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 24px;
+      padding: 24px;
+    }
+
+    /* ── Base slide ─────────────────────────────────────────── */
+    section {
+      width: 254mm;
+      height: 142.9mm;
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+      display: flex;
+      flex-direction: column;
+      background: var(--white);
+      flex-shrink: 0;
+    }
+
+    /* Red bottom bar on every slide */
+    section::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--accent);
+    }
+
+    /* ── Shared: slide footer ───────────────────────────────── */
+    .slide-footer {
+      position: absolute;
+      bottom: 9mm;
+      left: 14mm;
+      right: 14mm;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 6.5pt;
+      color: var(--carbon-40);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .slide-footer img {
+      height: 14px;
+      opacity: 0.45;
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       SLIDE TYPE 1 — Title slide (white)
+       Usage: class="slide-title"
+    ══════════════════════════════════════════════════════════ */
+    .slide-title {
+      background: var(--white);
+      padding: 0;
+      justify-content: space-between;
+    }
+
+    .slide-title .title-top {
+      display: flex;
+      align-items: stretch;
+    }
+
+    /* Left accent bar */
+    .slide-title .title-accent-bar {
+      width: 6mm;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .slide-title .title-inner {
+      flex: 1;
+      padding: 12mm 14mm 10mm 12mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 0;
+    }
+
+    .slide-title .title-logo-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10mm;
+    }
+    .slide-title .title-logo { height: 24px; }
+    .slide-title .title-org {
+      font-size: 8pt;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--carbon-40);
+    }
+
+    .slide-title .title-body { flex: 1; }
+    .slide-title .title-overline {
+      font-family: var(--font-mono);
+      font-size: 7.5pt;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 5px;
+    }
+    .slide-title h1 {
+      font-size: 28pt;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.08;
+      color: var(--carbon-black);
+      margin-bottom: 8px;
+    }
+    .slide-title .title-subtitle {
+      font-size: 11pt;
+      font-weight: 400;
+      color: var(--carbon-60);
+      line-height: 1.45;
+      max-width: 520px;
+    }
+
+    .slide-title .title-meta {
+      font-size: 8pt;
+      color: var(--carbon-50);
+      padding-top: 8mm;
+    }
+    .slide-title .title-meta strong { color: var(--carbon-70); font-weight: 600; }
+
+    .slide-title .slide-footer { color: var(--carbon-40); }
+
+    /* ══════════════════════════════════════════════════════════
+       SLIDE TYPE 2 — Section divider (white)
+       Usage: class="slide-divider"
+    ══════════════════════════════════════════════════════════ */
+    .slide-divider {
+      background: var(--white);
+      justify-content: center;
+      padding: 0;
+    }
+
+    .slide-divider .divider-inner {
+      display: flex;
+      align-items: stretch;
+      height: 100%;
+    }
+
+    .slide-divider .divider-bar {
+      width: 6mm;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .slide-divider .divider-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 14mm 0 12mm;
+    }
+
+    .slide-divider .divider-number {
+      font-family: var(--font-mono);
+      font-size: 9pt;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+
+    .slide-divider h2 {
+      font-size: 28pt;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--carbon-black);
+      margin-bottom: 10px;
+    }
+
+    .slide-divider .divider-desc {
+      font-size: 11pt;
+      color: var(--carbon-60);
+      line-height: 1.5;
+      max-width: 420px;
+    }
+
+    .slide-divider .slide-footer { color: var(--carbon-40); }
+
+    /* ══════════════════════════════════════════════════════════
+       SLIDE TYPE 3 — Content slide with bullets (light)
+       Usage: class="slide-content"
+       Dark variant: class="slide-content slide-content-dark"
+    ══════════════════════════════════════════════════════════ */
+    .slide-content {
+      background: var(--white);
+      padding: 10mm 14mm 18mm 14mm;
+    }
+
+    .slide-content .content-overline {
+      font-family: var(--font-mono);
+      font-size: 7pt;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .slide-content h2 {
+      font-size: 18pt;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      color: var(--carbon-black);
+      margin-bottom: 8mm;
+      padding-bottom: 5px;
+      border-bottom: 2px solid var(--carbon-10);
+    }
+
+    .slide-content .content-body { flex: 1; }
+
+    /* Bullet list */
+    .slide-content ul {
+      list-style: none;
+      padding: 0;
+    }
+    .slide-content ul li {
+      font-size: 10.5pt;
+      color: var(--carbon-60);
+      padding: 5px 0 5px 18px;
+      position: relative;
+      border-bottom: 1px solid var(--carbon-05);
+      line-height: 1.45;
+    }
+    .slide-content ul li:last-child { border-bottom: none; }
+    .slide-content ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 12px;
+      width: 7px;
+      height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+    .slide-content ul li strong { color: var(--carbon-black); font-weight: 600; }
+
+    /* Ordered list */
+    .slide-content ol {
+      padding-left: 20px;
+    }
+    .slide-content ol li {
+      font-size: 10.5pt;
+      color: var(--carbon-60);
+      padding: 4px 0;
+      line-height: 1.45;
+    }
+    .slide-content ol li::marker { color: var(--accent); font-weight: 700; }
+    .slide-content ol li strong { color: var(--carbon-black); font-weight: 600; }
+
+    /* Body text */
+    .slide-content p {
+      font-size: 10.5pt;
+      color: var(--carbon-60);
+      line-height: 1.6;
+      margin-bottom: 8px;
+      max-width: 75ch;
+    }
+
+    /* Two-column layout helper */
+    .two-col {
+      display: flex;
+      gap: 10mm;
+      flex: 1;
+    }
+    .two-col > * { flex: 1; }
+
+    /* Callout (blockquote) */
+    .callout {
+      border-left: 3px solid var(--accent);
+      background: var(--carbon-05);
+      padding: 8px 12px;
+      border-radius: 0 2px 2px 0;
+      margin: 8px 0;
+    }
+    .callout p { font-size: 9.5pt; margin-bottom: 0; }
+
+    /* Dark variant — disabled, always white */
+    .slide-content-dark { background: var(--white); }
+
+    /* ══════════════════════════════════════════════════════════
+       SLIDE TYPE 4 — Code / diagram slide (white)
+       Usage: class="slide-code"
+    ══════════════════════════════════════════════════════════ */
+    .slide-code {
+      background: var(--white);
+      padding: 10mm 14mm 18mm 14mm;
+    }
+
+    .slide-code .code-overline {
+      font-family: var(--font-mono);
+      font-size: 7pt;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .slide-code h2 {
+      font-size: 16pt;
+      font-weight: 700;
+      color: var(--carbon-black);
+      margin-bottom: 6mm;
+    }
+
+    .slide-code pre {
+      background: var(--carbon-05);
+      border: 1px solid var(--carbon-10);
+      border-radius: 3px;
+      padding: 12px 16px;
+      font-family: var(--font-mono);
+      font-size: 9pt;
+      line-height: 1.75;
+      color: var(--carbon-70);
+      overflow: hidden;
+      flex: 1;
+    }
+    .slide-code pre code { background: none; padding: 0; color: inherit; font-size: inherit; }
+
+    /* Syntax highlight hints (basic, dark-on-light) */
+    .slide-code .kw  { color: #1C67E3; } /* keyword — blue  */
+    .slide-code .fn  { color: #059669; } /* function — green */
+    .slide-code .str { color: #DC2626; } /* string — red    */
+    .slide-code .cm  { color: #9CA3AF; } /* comment — grey  */
+
+    .slide-code code { font-family: var(--font-mono); font-size: 9pt; }
+    .slide-code .slide-footer { color: var(--carbon-40); }
+
+    /* ── Inline code (used in content slides) ───────────────── */
+    code {
+      font-family: var(--font-mono);
+      font-size: 8.5pt;
+      background: var(--carbon-05);
+      padding: 1px 5px;
+      border-radius: 2px;
+    }
+
+    /* ── Table (used in content slides) ────────────────────── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9.5pt;
+      margin: 6px 0;
+    }
+    thead th {
+      text-align: left;
+      font-size: 7.5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--carbon-40);
+      padding: 5px 8px;
+      border-bottom: 2px solid var(--carbon-10);
+      font-family: var(--font-mono);
+    }
+    tbody td {
+      padding: 6px 8px;
+      border-bottom: 1px solid var(--carbon-05);
+      color: var(--carbon-60);
+    }
+
+    /* ── Print: one slide per page, hide browser chrome ─────── */
+    @media print {
+      body {
+        background: none;
+        padding: 0;
+        gap: 0;
+        display: block;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      section {
+        page-break-after: always;
+        break-after: page;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     SLIDE 1 — Title slide
+══════════════════════════════════════════════════════════ -->
+<section class="slide-title">
+  <div class="title-top" style="flex:1;">
+    <div class="title-accent-bar"></div>
+    <div class="title-inner">
+      <div class="title-logo-row">
+        <img src="mgm-logo.png" alt="mgm" class="title-logo">
+        <span class="title-org">mgm technology partners</span>
+      </div>
+      <div class="title-body">
+        <div class="title-overline">Engineering Demo</div>
+        <h1>Presentation Title</h1>
+        <p class="title-subtitle">Subtitle or mission tagline — one or two lines maximum</p>
+      </div>
+      <div class="title-meta">
+        <strong>Presented by:</strong> Author Name &nbsp;·&nbsp;
+        <strong>Date:</strong> April 2026
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span>mgm technology partners</span>
+    <span>Presentation Title · April 2026</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SLIDE 2 — Section divider
+══════════════════════════════════════════════════════════ -->
+<section class="slide-divider">
+  <div class="divider-inner">
+    <div class="divider-bar"></div>
+    <div class="divider-content">
+      <div class="divider-number">01 / 03</div>
+      <h2>Architecture<br>Overview</h2>
+      <p class="divider-desc">Three components, each with a single well-defined responsibility.</p>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span>mgm technology partners</span>
+    <span>Presentation Title · April 2026</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SLIDE 3 — Content with bullets (light)
+══════════════════════════════════════════════════════════ -->
+<section class="slide-content">
+  <div class="content-overline">Engineering Demo</div>
+  <h2>What We Built</h2>
+  <div class="content-body">
+    <ul>
+      <li><strong>Automated reviews</strong> — Replaces manual triage for common issues in pull requests</li>
+      <li><strong>Under 60 seconds</strong> — Reviews run fast; inline comments posted directly on the PR</li>
+      <li><strong>Three components</strong> — Data fetch, reasoning, and code intelligence cleanly separated</li>
+      <li><strong>Token-efficient</strong> — PR data injected once via Python; zero read MCP calls during review</li>
+    </ul>
+  </div>
+  <div class="slide-footer">
+    <span>mgm technology partners</span>
+    <span>Presentation Title · April 2026</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SLIDE 4 — Content with bullets (dark variant)
+══════════════════════════════════════════════════════════ -->
+<section class="slide-content slide-content-dark">
+  <div class="content-overline">Engineering Demo</div>
+  <h2>Key Design Decisions</h2>
+  <div class="content-body">
+    <ul>
+      <li><strong>PR data pre-fetched in Python</strong> — No MCP read round-trips; saves tokens and latency</li>
+      <li><strong>Serena for code intelligence</strong> — On-demand symbol lookup, only when a breakage is suspected</li>
+      <li><strong>Bitbucket MCP write-only</strong> — Scoped to <code>add_pull_request_comment</code>; easy to audit</li>
+    </ul>
+    <div class="callout" style="margin-top:10px;">
+      <p>Result: 3–5 fewer MCP round-trips per review, ~15–20% token reduction.</p>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span>mgm technology partners</span>
+    <span>Presentation Title · April 2026</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SLIDE 5 — Content with table
+══════════════════════════════════════════════════════════ -->
+<section class="slide-content">
+  <div class="content-overline">Engineering Demo</div>
+  <h2>Results</h2>
+  <div class="content-body">
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Before</th>
+          <th>After</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Avg review time</td><td>8 min (manual)</td><td><strong>45 sec</strong></td></tr>
+        <tr><td>Token usage</td><td>—</td><td>~12,000 tokens</td></tr>
+        <tr><td>MCP calls per review</td><td>—</td><td>2–6 (writes only)</td></tr>
+        <tr><td>Serena queries</td><td>—</td><td>3–8 (targeted)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="slide-footer">
+    <span>mgm technology partners</span>
+    <span>Presentation Title · April 2026</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SLIDE 6 — Code / diagram slide
+══════════════════════════════════════════════════════════ -->
+<section class="slide-code">
+  <div class="code-overline">Engineering Demo</div>
+  <h2>How a Review Works</h2>
+  <pre><code><span class="cm"># 1. Pre-fetch PR diff before the agent starts</span>
+diff = BitbucketClient(<span class="str">workspace</span>, <span class="str">repo</span>).get_diff(pr_id)
+
+<span class="cm"># 2. Inject diff + metadata into the agent prompt</span>
+result = <span class="kw">await</span> agent.run(build_prompt(diff, metadata))
+
+<span class="cm"># 3. Post findings as inline comments via MCP</span>
+<span class="kw">for</span> comment <span class="kw">in</span> result.comments:
+    <span class="kw">await</span> bitbucket_mcp.<span class="fn">add_pull_request_comment</span>(pr_id, comment)</code></pre>
+  <div class="slide-footer">
+    <span>mgm technology partners</span>
+    <span>Presentation Title · April 2026</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SLIDE 7 — Two-column content
+══════════════════════════════════════════════════════════ -->
+<section class="slide-content">
+  <div class="content-overline">Engineering Demo</div>
+  <h2>Architecture Components</h2>
+  <div class="content-body">
+    <div class="two-col">
+      <div>
+        <p style="font-size:8.5pt; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--carbon-40); margin-bottom:6px;">Data Layer</p>
+        <ul>
+          <li><strong>Bitbucket Client API</strong> — Pre-fetches PR diffs and metadata via Python</li>
+          <li><strong>Serena</strong> — On-demand symbol lookup for code intelligence</li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-size:8.5pt; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--carbon-40); margin-bottom:6px;">Action Layer</p>
+        <ul>
+          <li><strong>Claude Agent SDK</strong> — Orchestrates the review logic and reasoning</li>
+          <li><strong>Bitbucket MCP</strong> — Write-only: posts inline review comments</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span>mgm technology partners</span>
+    <span>Presentation Title · April 2026</span>
+  </div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clay Design System</title>
+  <style>
+    /* ── System fonts approximating Inter / Plain Black ── */
+    :root {
+      --canvas:        #fffaf0;
+      --surface-soft:  #faf5e8;
+      --surface-card:  #f5f0e0;
+      --surface-strong:#ebe6d6;
+      --surface-dark:  #0a1a1a;
+      --ink:           #0a0a0a;
+      --body-strong:   #1a1a1a;
+      --body:          #3a3a3a;
+      --muted:         #6a6a6a;
+      --muted-soft:    #9a9a9a;
+      --hairline:      #e5e5e5;
+      --hairline-soft: #f0f0f0;
+      --on-primary:    #ffffff;
+      --on-dark:       #ffffff;
+      --pink:          #ff4d8b;
+      --teal:          #1a3a3a;
+      --lavender:      #b8a4ed;
+      --peach:         #ffb084;
+      --ochre:         #e8b94a;
+      --mint:          #a4d4c5;
+      --coral:         #ff6b5a;
+      --success:       #22c55e;
+      --warning:       #f59e0b;
+      --error:         #ef4444;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      --font-mono: "SF Mono", "Fira Code", "Cascadia Code", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--canvas);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      padding: 64px 80px;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    /* ── Layout ── */
+    .section { margin-bottom: 80px; }
+    .section-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 2px; color: var(--muted); margin-bottom: 32px;
+      padding-bottom: 10px; border-bottom: 2px solid var(--hairline);
+    }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+    .grid-6 { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+
+    /* ── Header ── */
+    .page-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      margin-bottom: 96px;
+    }
+    .page-header-bar {
+      width: 6px; background: var(--pink); align-self: stretch;
+      border-radius: 3px; margin-right: 24px; flex-shrink: 0;
+    }
+    .page-header-content { flex: 1; }
+    .page-overline {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 2px; color: var(--pink); margin-bottom: 8px;
+    }
+    .page-title {
+      font-size: 48px; font-weight: 500; letter-spacing: -1.5px;
+      line-height: 1.05; color: var(--ink); margin-bottom: 12px;
+    }
+    .page-desc { font-size: 16px; color: var(--muted); line-height: 1.55; max-width: 480px; }
+    .version-badge {
+      background: var(--surface-card); border-radius: 9999px;
+      padding: 6px 14px; font-size: 12px; font-weight: 600;
+      color: var(--muted); align-self: flex-start; white-space: nowrap;
+    }
+
+    /* ── Color swatches ── */
+    .swatch-group { margin-bottom: 32px; }
+    .swatch-group-label {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 1.5px; color: var(--muted-soft); margin-bottom: 12px;
+    }
+    .swatch {
+      border-radius: 12px; overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+    .swatch-color { height: 72px; }
+    .swatch-info { padding: 10px 12px; background: var(--surface-soft); }
+    .swatch-name { font-size: 12px; font-weight: 600; color: var(--body-strong); margin-bottom: 2px; }
+    .swatch-hex { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+
+    /* ── Typography ── */
+    .type-row {
+      display: flex; align-items: baseline; gap: 24px;
+      padding: 20px 0; border-bottom: 1px solid var(--hairline-soft);
+    }
+    .type-row:last-child { border-bottom: none; }
+    .type-meta {
+      width: 200px; flex-shrink: 0;
+    }
+    .type-token {
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--pink); margin-bottom: 4px;
+    }
+    .type-spec { font-size: 11px; color: var(--muted-soft); line-height: 1.6; }
+    .type-sample { flex: 1; color: var(--ink); }
+
+    /* ── Spacing ── */
+    .spacing-row {
+      display: flex; align-items: center; gap: 16px;
+      padding: 10px 0; border-bottom: 1px solid var(--hairline-soft);
+    }
+    .spacing-row:last-child { border-bottom: none; }
+    .spacing-bar-wrap { width: 200px; }
+    .spacing-bar { background: var(--pink); height: 8px; border-radius: 4px; opacity: 0.7; }
+    .spacing-label { font-family: var(--font-mono); font-size: 12px; color: var(--muted); width: 80px; }
+    .spacing-value { font-size: 13px; font-weight: 600; color: var(--body-strong); }
+
+    /* ── Radius ── */
+    .radius-grid { display: flex; flex-wrap: wrap; gap: 20px; }
+    .radius-item { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .radius-box {
+      width: 72px; height: 72px;
+      background: var(--surface-card); border: 2px solid var(--hairline);
+    }
+    .radius-label { font-size: 11px; font-family: var(--font-mono); color: var(--muted); }
+    .radius-value { font-size: 12px; font-weight: 600; color: var(--body-strong); }
+
+    /* ── Components ── */
+    .component-row { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 32px; }
+    .component-label {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 1.5px; color: var(--muted-soft); margin-bottom: 12px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      font-family: var(--font); font-size: 14px; font-weight: 600;
+      line-height: 1; padding: 12px 20px; height: 44px;
+      border-radius: 12px; border: none; cursor: pointer; text-decoration: none;
+      white-space: nowrap;
+    }
+    .btn-primary { background: var(--ink); color: var(--on-primary); }
+    .btn-secondary { background: var(--canvas); color: var(--ink); border: 1px solid var(--hairline); }
+    .btn-on-color { background: var(--canvas); color: var(--ink); }
+    .btn-text { background: transparent; color: var(--ink); padding: 12px 0; height: auto; }
+    .btn-disabled { background: var(--hairline); color: var(--muted); cursor: not-allowed; }
+
+    /* Feature cards */
+    .feature-card {
+      border-radius: 24px; padding: 32px;
+      display: flex; flex-direction: column; gap: 12px; min-height: 160px;
+    }
+    .feature-card h3 { font-size: 18px; font-weight: 600; line-height: 1.4; margin: 0; }
+    .feature-card p { font-size: 14px; line-height: 1.55; margin: 0; opacity: 0.85; }
+    .card-pink { background: var(--pink); color: var(--on-primary); }
+    .card-teal { background: var(--teal); color: var(--on-dark); }
+    .card-lavender { background: var(--lavender); color: var(--ink); }
+    .card-peach { background: var(--peach); color: var(--ink); }
+    .card-ochre { background: var(--ochre); color: var(--ink); }
+    .card-cream { background: var(--surface-card); color: var(--ink); border: 1px solid var(--hairline); }
+
+    /* Content cards */
+    .content-card {
+      background: var(--canvas); border: 1px solid var(--hairline);
+      border-radius: 16px; padding: 24px;
+    }
+    .content-card-soft {
+      background: var(--surface-card); border-radius: 16px; padding: 24px;
+    }
+    .content-card h4 { font-size: 16px; font-weight: 600; margin-bottom: 8px; color: var(--ink); }
+    .content-card p, .content-card-soft p { font-size: 14px; color: var(--body); line-height: 1.55; margin: 0; }
+
+    /* Badge */
+    .badge {
+      display: inline-flex; align-items: center;
+      background: var(--surface-card); color: var(--ink);
+      font-size: 13px; font-weight: 500; padding: 4px 12px;
+      border-radius: 9999px;
+    }
+    .badge-pink { background: var(--pink); color: var(--on-primary); }
+
+    /* Tab */
+    .tab {
+      display: inline-flex; align-items: center;
+      font-size: 14px; font-weight: 500; color: var(--muted);
+      padding: 8px 16px; border-radius: 9999px; cursor: pointer;
+    }
+    .tab-active {
+      background: var(--surface-card); color: var(--ink);
+    }
+
+    /* Input */
+    .input-demo {
+      background: var(--canvas); color: var(--ink);
+      font-family: var(--font); font-size: 16px;
+      border: 1px solid var(--hairline); border-radius: 12px;
+      padding: 12px 16px; height: 44px; width: 280px;
+      outline: none;
+    }
+    .input-focused { border-color: var(--ink); border-width: 2px; }
+
+    /* Callout / testimonial */
+    .testimonial {
+      background: var(--surface-card); border-radius: 16px; padding: 24px;
+    }
+    .testimonial blockquote {
+      font-size: 15px; line-height: 1.6; color: var(--body);
+      margin-bottom: 16px; font-style: normal;
+    }
+    .testimonial-meta { font-size: 13px; font-weight: 600; color: var(--body-strong); }
+    .testimonial-role { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    /* Pricing card */
+    .pricing-card {
+      background: var(--canvas); border: 1px solid var(--hairline);
+      border-radius: 16px; padding: 32px;
+    }
+    .pricing-card-featured {
+      background: var(--teal); color: var(--on-dark);
+      border-radius: 16px; padding: 32px;
+    }
+    .pricing-plan { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 8px; }
+    .pricing-card-featured .pricing-plan { color: rgba(255,255,255,0.6); }
+    .pricing-price { font-size: 40px; font-weight: 500; letter-spacing: -1px; color: var(--ink); line-height: 1; }
+    .pricing-card-featured .pricing-price { color: var(--on-dark); }
+    .pricing-period { font-size: 14px; color: var(--muted); margin-top: 4px; }
+    .pricing-card-featured .pricing-period { color: rgba(255,255,255,0.6); }
+
+    /* CTA band */
+    .cta-band {
+      background: var(--surface-soft); border-radius: 24px;
+      padding: 64px; display: flex; align-items: center;
+      justify-content: space-between; gap: 48px;
+    }
+    .cta-band h2 { font-size: 32px; font-weight: 500; letter-spacing: -0.8px; color: var(--ink); max-width: 420px; line-height: 1.2; }
+    .cta-band p { font-size: 16px; color: var(--muted); margin-top: 12px; }
+
+    /* Footer band */
+    .footer-band {
+      background: var(--surface-soft); border-radius: 24px;
+      padding: 48px; display: flex; gap: 48px;
+    }
+    .footer-col h5 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 16px; }
+    .footer-col a { display: block; font-size: 14px; color: var(--body); text-decoration: none; margin-bottom: 10px; }
+
+    /* Divider */
+    .divider { border: none; border-top: 1px solid var(--hairline); margin: 64px 0; }
+
+    /* Code inline */
+    code { font-family: var(--font-mono); font-size: 12px; background: var(--surface-card); padding: 2px 6px; border-radius: 6px; color: var(--body-strong); }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ──────────────────────────────────────────── -->
+<div class="page-header">
+  <div style="display:flex; align-items:stretch; gap:0; flex:1;">
+    <div class="page-header-bar"></div>
+    <div class="page-header-content">
+      <div class="page-overline">Design System</div>
+      <h1 class="page-title">Clay</h1>
+      <p class="page-desc">Cream canvas, claymation warmth, and saturated feature cards. GTM data-orchestration — playful by design.</p>
+    </div>
+  </div>
+  <span class="version-badge">alpha</span>
+</div>
+
+
+<!-- ── Colors ──────────────────────────────────────────── -->
+<div class="section">
+  <div class="section-label">Colors</div>
+
+  <div class="swatch-group">
+    <div class="swatch-group-label">Brand &amp; Accent</div>
+    <div class="grid-6">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#ff4d8b;"></div>
+        <div class="swatch-info"><div class="swatch-name">Pink</div><div class="swatch-hex">#ff4d8b</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1a3a3a;"></div>
+        <div class="swatch-info"><div class="swatch-name">Teal</div><div class="swatch-hex">#1a3a3a</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#b8a4ed;"></div>
+        <div class="swatch-info"><div class="swatch-name">Lavender</div><div class="swatch-hex">#b8a4ed</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#ffb084;"></div>
+        <div class="swatch-info"><div class="swatch-name">Peach</div><div class="swatch-hex">#ffb084</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#e8b94a;"></div>
+        <div class="swatch-info"><div class="swatch-name">Ochre</div><div class="swatch-hex">#e8b94a</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#a4d4c5;"></div>
+        <div class="swatch-info"><div class="swatch-name">Mint</div><div class="swatch-hex">#a4d4c5</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="swatch-group">
+    <div class="swatch-group-label">Surface</div>
+    <div class="grid-6">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#fffaf0; border-bottom:1px solid #e5e5e5;"></div>
+        <div class="swatch-info"><div class="swatch-name">Canvas</div><div class="swatch-hex">#fffaf0</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#faf5e8;"></div>
+        <div class="swatch-info"><div class="swatch-name">Soft</div><div class="swatch-hex">#faf5e8</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#f5f0e0;"></div>
+        <div class="swatch-info"><div class="swatch-name">Card</div><div class="swatch-hex">#f5f0e0</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#ebe6d6;"></div>
+        <div class="swatch-info"><div class="swatch-name">Strong</div><div class="swatch-hex">#ebe6d6</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#0a1a1a;"></div>
+        <div class="swatch-info"><div class="swatch-name">Dark</div><div class="swatch-hex">#0a1a1a</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1a2a2a;"></div>
+        <div class="swatch-info"><div class="swatch-name">Dark Elevated</div><div class="swatch-hex">#1a2a2a</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="swatch-group">
+    <div class="swatch-group-label">Text &amp; Structure</div>
+    <div class="grid-6">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#0a0a0a;"></div>
+        <div class="swatch-info"><div class="swatch-name">Ink</div><div class="swatch-hex">#0a0a0a</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1a1a1a;"></div>
+        <div class="swatch-info"><div class="swatch-name">Body Strong</div><div class="swatch-hex">#1a1a1a</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#3a3a3a;"></div>
+        <div class="swatch-info"><div class="swatch-name">Body</div><div class="swatch-hex">#3a3a3a</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#6a6a6a;"></div>
+        <div class="swatch-info"><div class="swatch-name">Muted</div><div class="swatch-hex">#6a6a6a</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#9a9a9a;"></div>
+        <div class="swatch-info"><div class="swatch-name">Muted Soft</div><div class="swatch-hex">#9a9a9a</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#e5e5e5;"></div>
+        <div class="swatch-info"><div class="swatch-name">Hairline</div><div class="swatch-hex">#e5e5e5</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="swatch-group">
+    <div class="swatch-group-label">Semantic</div>
+    <div class="grid-4" style="max-width:600px;">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#22c55e;"></div>
+        <div class="swatch-info"><div class="swatch-name">Success</div><div class="swatch-hex">#22c55e</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#f59e0b;"></div>
+        <div class="swatch-info"><div class="swatch-name">Warning</div><div class="swatch-hex">#f59e0b</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#ef4444;"></div>
+        <div class="swatch-info"><div class="swatch-name">Error</div><div class="swatch-hex">#ef4444</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#ff6b5a;"></div>
+        <div class="swatch-info"><div class="swatch-name">Coral</div><div class="swatch-hex">#ff6b5a</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ── Typography ──────────────────────────────────────── -->
+<div class="section">
+  <div class="section-label">Typography</div>
+
+  <div class="type-row">
+    <div class="type-meta">
+      <div class="type-token">display-xl</div>
+      <div class="type-spec">72px · weight 500<br>lh 1.0 · ls −2.5px<br>Plain Black / Inter</div>
+    </div>
+    <div class="type-sample" style="font-size:56px; font-weight:500; letter-spacing:-2px; line-height:1.0;">Go to market</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">
+      <div class="type-token">display-lg</div>
+      <div class="type-spec">56px · weight 500<br>lh 1.05 · ls −2px</div>
+    </div>
+    <div class="type-sample" style="font-size:44px; font-weight:500; letter-spacing:-1.5px; line-height:1.05;">Unique data</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">
+      <div class="type-token">display-md</div>
+      <div class="type-spec">40px · weight 500<br>lh 1.1 · ls −1px</div>
+    </div>
+    <div class="type-sample" style="font-size:36px; font-weight:500; letter-spacing:-0.8px; line-height:1.1;">Turn ideas into growth</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">
+      <div class="type-token">display-sm</div>
+      <div class="type-spec">32px · weight 500<br>lh 1.15 · ls −0.5px</div>
+    </div>
+    <div class="type-sample" style="font-size:28px; font-weight:500; letter-spacing:-0.4px; line-height:1.15;">Automate your outreach</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">
+      <div class="type-token">title-lg</div>
+      <div class="type-spec">24px · weight 600<br>lh 1.3 · ls −0.3px · Inter</div>
+    </div>
+    <div class="type-sample" style="font-size:22px; font-weight:600; letter-spacing:-0.2px; line-height:1.3;">Pro plan — everything included</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">
+      <div class="type-token">title-md</div>
+      <div class="type-spec">18px · weight 600<br>lh 1.4 · Inter</div>
+    </div>
+    <div class="type-sample" style="font-size:18px; font-weight:600; line-height:1.4;">AI-powered data enrichment</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">
+      <div class="type-token">title-sm</div>
+      <div class="type-spec">16px · weight 600<br>lh 1.4 · Inter</div>
+    </div>
+    <div class="type-sample" style="font-size:16px; font-weight:600; line-height:1.4;">Connected data sources</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">
+      <div class="type-token">body-md</div>
+      <div class="type-spec">16px · weight 400<br>lh 1.55 · Inter</div>
+    </div>
+    <div class="type-sample" style="font-size:16px; font-weight:400; line-height:1.55; color:var(--body);">Claygent automatically enriches your leads with accurate company and contact data so you can focus on closing deals.</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">
+      <div class="type-token">body-sm</div>
+      <div class="type-spec">14px · weight 400<br>lh 1.55 · Inter</div>
+    </div>
+    <div class="type-sample" style="font-size:14px; font-weight:400; line-height:1.55; color:var(--body);">Connect your CRM, enrich your pipeline, and launch sequences — all from one platform.</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">
+      <div class="type-token">caption-uppercase</div>
+      <div class="type-spec">12px · weight 600<br>lh 1.4 · ls 1.5px</div>
+    </div>
+    <div class="type-sample" style="font-size:12px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted);">Section label · Featured</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">
+      <div class="type-token">button</div>
+      <div class="type-spec">14px · weight 600<br>lh 1.0</div>
+    </div>
+    <div class="type-sample" style="font-size:14px; font-weight:600; line-height:1;">Get started free · Sign in</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ── Spacing ─────────────────────────────────────────── -->
+<div class="section">
+  <div class="section-label">Spacing (base 4px)</div>
+
+  <div class="spacing-row">
+    <div class="spacing-label">xxs</div>
+    <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:4px;"></div></div>
+    <div class="spacing-value">4px</div>
+  </div>
+  <div class="spacing-row">
+    <div class="spacing-label">xs</div>
+    <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:8px;"></div></div>
+    <div class="spacing-value">8px</div>
+  </div>
+  <div class="spacing-row">
+    <div class="spacing-label">sm</div>
+    <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:12px;"></div></div>
+    <div class="spacing-value">12px</div>
+  </div>
+  <div class="spacing-row">
+    <div class="spacing-label">md</div>
+    <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:16px;"></div></div>
+    <div class="spacing-value">16px</div>
+  </div>
+  <div class="spacing-row">
+    <div class="spacing-label">lg</div>
+    <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:24px;"></div></div>
+    <div class="spacing-value">24px</div>
+  </div>
+  <div class="spacing-row">
+    <div class="spacing-label">xl</div>
+    <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:32px;"></div></div>
+    <div class="spacing-value">32px</div>
+  </div>
+  <div class="spacing-row">
+    <div class="spacing-label">xxl</div>
+    <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:48px;"></div></div>
+    <div class="spacing-value">48px</div>
+  </div>
+  <div class="spacing-row">
+    <div class="spacing-label">section</div>
+    <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:96px;"></div></div>
+    <div class="spacing-value">96px — major band gap</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ── Border Radius ───────────────────────────────────── -->
+<div class="section">
+  <div class="section-label">Border Radius</div>
+  <div class="radius-grid">
+    <div class="radius-item">
+      <div class="radius-box" style="border-radius:6px;"></div>
+      <div class="radius-label">xs</div>
+      <div class="radius-value">6px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-box" style="border-radius:8px;"></div>
+      <div class="radius-label">sm</div>
+      <div class="radius-value">8px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-box" style="border-radius:12px;"></div>
+      <div class="radius-label">md</div>
+      <div class="radius-value">12px · buttons, inputs</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-box" style="border-radius:16px;"></div>
+      <div class="radius-label">lg</div>
+      <div class="radius-value">16px · content cards</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-box" style="border-radius:24px;"></div>
+      <div class="radius-label">xl</div>
+      <div class="radius-value">24px · feature cards</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-box" style="border-radius:9999px; width:72px; height:36px;"></div>
+      <div class="radius-label">pill</div>
+      <div class="radius-value">9999px · tabs, badges</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-box" style="border-radius:50%; width:72px; height:72px;"></div>
+      <div class="radius-label">full</div>
+      <div class="radius-value">50% · avatars</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ── Buttons ─────────────────────────────────────────── -->
+<div class="section">
+  <div class="section-label">Buttons</div>
+  <div class="component-row">
+    <button class="btn btn-primary">Get started free</button>
+    <button class="btn btn-secondary">Sign in</button>
+    <button class="btn btn-disabled" disabled>Unavailable</button>
+    <button class="btn btn-text">Learn more →</button>
+  </div>
+  <div style="background:var(--pink); border-radius:16px; padding:24px; display:inline-flex; gap:12px; margin-top:16px;">
+    <button class="btn btn-on-color">Try free</button>
+    <button class="btn btn-text" style="color:#fff;">Learn more →</button>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ── Feature Cards ───────────────────────────────────── -->
+<div class="section">
+  <div class="section-label">Feature Cards — 6-color palette</div>
+  <div class="grid-3" style="margin-bottom:16px;">
+    <div class="feature-card card-pink">
+      <h3>Sequence at scale</h3>
+      <p>Launch personalized outbound campaigns with AI-built sequences for every contact.</p>
+    </div>
+    <div class="feature-card card-teal">
+      <h3>Enterprise data</h3>
+      <p>Enrich at volume. 100+ data providers unified in a single enrichment layer.</p>
+    </div>
+    <div class="feature-card card-lavender">
+      <h3>Claygent AI agent</h3>
+      <p>Research any company or contact using natural-language instructions.</p>
+    </div>
+  </div>
+  <div class="grid-3">
+    <div class="feature-card card-peach">
+      <h3>CRM sync</h3>
+      <p>Push enriched data directly to Salesforce, HubSpot, or Attio — no code needed.</p>
+    </div>
+    <div class="feature-card card-ochre">
+      <h3>Community & experts</h3>
+      <p>5,000+ GTM practitioners sharing templates, waterfall flows, and playbooks.</p>
+    </div>
+    <div class="feature-card card-cream">
+      <h3>Import any source</h3>
+      <p>CSV, webhook, LinkedIn, or live scrape — any list format becomes a Clay table.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ── Content Cards ───────────────────────────────────── -->
+<div class="section">
+  <div class="section-label">Content Cards</div>
+  <div class="grid-3">
+    <div class="content-card">
+      <h4>Product mockup</h4>
+      <p>Canvas background, hairline border, 16px radius. Shows product UI fragments.</p>
+    </div>
+    <div class="content-card-soft">
+      <h4>Testimonial</h4>
+      <p>Surface-card background, no border. Warm cream tone for customer quotes.</p>
+    </div>
+    <div class="testimonial">
+      <blockquote>"Clay completely changed how our sales team sources leads. We went from 2 days of research to 2 hours."</blockquote>
+      <div class="testimonial-meta">Sarah Chen</div>
+      <div class="testimonial-role">Head of Growth · Acme Corp</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ── Pricing ─────────────────────────────────────────── -->
+<div class="section">
+  <div class="section-label">Pricing Tier Cards</div>
+  <div class="grid-3">
+    <div class="pricing-card">
+      <div class="pricing-plan">Starter</div>
+      <div class="pricing-price">$149</div>
+      <div class="pricing-period">per month · 1,000 credits</div>
+    </div>
+    <div class="pricing-card-featured">
+      <div class="pricing-plan">Pro</div>
+      <div class="pricing-price" style="color:#fff;">$349</div>
+      <div class="pricing-period">per month · 10,000 credits</div>
+    </div>
+    <div class="pricing-card">
+      <div class="pricing-plan">Enterprise</div>
+      <div class="pricing-price">Custom</div>
+      <div class="pricing-period">volume pricing · SSO included</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ── Inputs & Tabs & Badges ──────────────────────────── -->
+<div class="section">
+  <div class="section-label">Inputs · Tabs · Badges</div>
+
+  <div class="component-label">Text Input</div>
+  <div class="component-row">
+    <input class="input-demo" type="text" placeholder="Search contacts…" readonly>
+    <input class="input-demo input-focused" type="text" value="sarah@acme.com" readonly>
+  </div>
+
+  <div class="component-label" style="margin-top:32px;">Category Tabs</div>
+  <div style="display:flex; gap:6px; background:var(--surface-soft); padding:6px; border-radius:9999px; width:fit-content; margin-bottom:32px;">
+    <span class="tab tab-active">All features</span>
+    <span class="tab">Enrichment</span>
+    <span class="tab">Sequencing</span>
+    <span class="tab">Integrations</span>
+  </div>
+
+  <div class="component-label">Badges</div>
+  <div class="component-row">
+    <span class="badge">New</span>
+    <span class="badge">Beta</span>
+    <span class="badge badge-pink">Featured</span>
+    <span class="badge" style="background:var(--teal); color:#fff;">Enterprise</span>
+    <span class="badge" style="background:var(--surface-strong);">100+ sources</span>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ── CTA Band ────────────────────────────────────────── -->
+<div class="section">
+  <div class="section-label">CTA Band</div>
+  <div class="cta-band">
+    <div>
+      <h2>Turn your growth ideas<br>into reality today</h2>
+      <p>Join 50,000+ GTM professionals already using Clay.</p>
+    </div>
+    <button class="btn btn-primary" style="font-size:15px; padding:14px 28px; height:auto;">Get started free</button>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ── Footer Band ────────────────────────────────────── -->
+<div class="section">
+  <div class="section-label">Footer (cream — NOT dark)</div>
+  <div class="footer-band">
+    <div class="footer-col" style="min-width:120px;">
+      <h5>Product</h5>
+      <a href="#">Enrichment</a>
+      <a href="#">Sequencing</a>
+      <a href="#">Claygent</a>
+      <a href="#">Pricing</a>
+    </div>
+    <div class="footer-col" style="min-width:120px;">
+      <h5>Solutions</h5>
+      <a href="#">Outbound sales</a>
+      <a href="#">GTM engineering</a>
+      <a href="#">RevOps</a>
+    </div>
+    <div class="footer-col" style="min-width:120px;">
+      <h5>Resources</h5>
+      <a href="#">Docs</a>
+      <a href="#">Templates</a>
+      <a href="#">Community</a>
+      <a href="#">Blog</a>
+    </div>
+    <div class="footer-col" style="min-width:120px;">
+      <h5>Company</h5>
+      <a href="#">About</a>
+      <a href="#">Customers</a>
+      <a href="#">Careers</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── Do / Don't ─────────────────────────────────────── -->
+<div class="section">
+  <div class="section-label">Rules</div>
+  <div class="grid-2">
+    <div style="background:var(--surface-soft); border-radius:16px; padding:32px;">
+      <div style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#22c55e; margin-bottom:20px;">✓ Do</div>
+      <ul style="list-style:none; display:flex; flex-direction:column; gap:10px;">
+        <li style="font-size:14px; color:var(--body); padding-left:16px; border-left:3px solid #22c55e;">Anchor every page on cream canvas <code>#fffaf0</code></li>
+        <li style="font-size:14px; color:var(--body); padding-left:16px; border-left:3px solid #22c55e;">Cycle 6 brand-color cards: pink → teal → lavender → peach → ochre → cream</li>
+        <li style="font-size:14px; color:var(--body); padding-left:16px; border-left:3px solid #22c55e;">Display headlines: weight 500 with negative letter-spacing</li>
+        <li style="font-size:14px; color:var(--body); padding-left:16px; border-left:3px solid #22c55e;">Use cream footer — Clay never uses a dark footer</li>
+        <li style="font-size:14px; color:var(--body); padding-left:16px; border-left:3px solid #22c55e;">Show product UI fragments inside colored cards</li>
+        <li style="font-size:14px; color:var(--body); padding-left:16px; border-left:3px solid #22c55e;">96px between major editorial bands</li>
+      </ul>
+    </div>
+    <div style="background:var(--surface-soft); border-radius:16px; padding:32px;">
+      <div style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#ef4444; margin-bottom:20px;">✗ Don't</div>
+      <ul style="list-style:none; display:flex; flex-direction:column; gap:10px;">
+        <li style="font-size:14px; color:var(--body); padding-left:16px; border-left:3px solid #ef4444;">Use cool grays for canvas — the cream tint is non-negotiable</li>
+        <li style="font-size:14px; color:var(--body); padding-left:16px; border-left:3px solid #ef4444;">Repeat the same brand-color card twice in a row</li>
+        <li style="font-size:14px; color:var(--body); padding-left:16px; border-left:3px solid #ef4444;">Bold display weight beyond 500 — reads as bombastic</li>
+        <li style="font-size:14px; color:var(--body); padding-left:16px; border-left:3px solid #ef4444;">Add a 7th brand-color card variant</li>
+        <li style="font-size:14px; color:var(--body); padding-left:16px; border-left:3px solid #ef4444;">Replace claymation illustrations with flat vector art</li>
+        <li style="font-size:14px; color:var(--body); padding-left:16px; border-left:3px solid #ef4444;">Use a dark footer</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
