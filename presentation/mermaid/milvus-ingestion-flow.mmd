@@ -1,0 +1,11 @@
+flowchart LR
+    A([MinIO index.md files]) --> B[Diff by ETag]
+    B -->|unchanged| SK([Skip])
+    B -->|added| C[Chunk & Embed]
+    B -->|modified| D[Delete old chunks]
+    B -->|deleted| DEL[Delete chunks]
+    C --> INS[Insert into Milvus]
+    D --> RE[Chunk & Embed]
+    RE --> INS
+    INS --> M([Milvus Collection])
+    DEL --> M
