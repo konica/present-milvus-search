@@ -4,8 +4,7 @@ flowchart LR
     B -->|added| C[Chunk & Embed]
     B -->|modified| D[Delete old chunks]
     B -->|deleted| DEL[Delete chunks]
-    C --> INS[Insert into Milvus]
+    C --> M([Milvus Collection])
     D --> RE[Chunk & Embed]
-    RE --> INS
-    INS --> M([Milvus Collection])
+    RE --> M
     DEL --> M

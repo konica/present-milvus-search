@@ -480,16 +480,6 @@ function buildSlides() {
 
   ${slideHtml}
 
-  <!-- End slide -->
-  <section class="slide-end">
-    <div>
-      <img src="${logoUri}" alt="mgm" style="width: 80px; margin-bottom: 20px; opacity: 0.3; filter: invert(1);">
-      <h2>End of Briefing</h2>
-      <p>Questions and discussion</p>
-    </div>
-    ${slideFooter}
-  </section>
-
 </body>
 </html>`;
 }
